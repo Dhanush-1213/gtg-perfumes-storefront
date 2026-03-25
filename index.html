@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTG Perfumes — Fine Fragrance</title>
+
+  <!-- Favicon — inline SVG: dark circle with gold "G" monogram -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230d0905'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia%2C serif' font-size='30' font-weight='400' fill='%23b8955a' letter-spacing='1'%3EG%3C/text%3E%3C/svg%3E" />
+  <!-- Fallback PNG favicon for older browsers -->
+  <link rel="alternate icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAKtJREFUWEftlkEKwCAMBOP/H20PBdHs2mSThF4F8RSHcWMSEBERkS9gBzN7mdkJAMzsZWanBIC7u7t7AcDMzMzMTAAws5n5AcDdnZ2dmQAAZmZmZiYAMDMzMzMBgJmZmZmZAMDMzMzMBMDMzMzMTAAws5n5AcDdnZ2dmQAAZmZmZiYAMDMzMzMBgJmZmZmZAMDMzMzMTACws5n5AcDd3d3dAICZmZmZAQAAAP//3AIJAAAAAASUVORK5CYII=" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      --ink:        #0d0905;
+      --gold:       #b8955a;
+      --gold-light: #d4ae78;
+      --cream:      #f8f3ec;
+      --warm:       #f0e8dc;
+      --warm-2:     #e8ddd0;
+      --surface:    #fffcf8;
+      --muted:      #7a6a5a;
+      --line:       rgba(13,9,5,0.10);
+      --radius:     4px;
+      --radius-lg:  20px;
+      --shadow-sm:  0 2px 16px rgba(13,9,5,0.06);
+      --shadow:     0 12px 48px rgba(13,9,5,0.10);
+      --shadow-lg:  0 32px 80px rgba(13,9,5,0.14);
+    }
+
+    /* ─────────────────────────────────────────
+       RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; cursor: pointer; }
+
+    .container {
+      width: min(calc(100% - 3rem), 1200px);
+      margin: 0 auto;
+    }
+
+    /* ─────────────────────────────────────────
+       NOISE TEXTURE OVERLAY
+    ───────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      background: rgba(248,243,236,0.90);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em;
+    }
+
+    .brand-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 500; letter-spacing: 0.06em;
+    }
+
+    .primary-nav {
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+
+    .primary-nav a {
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .primary-nav a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .primary-nav a:hover { color: var(--ink); }
+    .primary-nav a:hover::after { width: 100%; }
+
+    .menu-toggle {
+      display: none;
+      width: 44px; height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 18px; height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    /* ─────────────────────────────────────────
+       BUTTONS
+    ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.5rem;
+      min-height: 52px;
+      padding: 0 2rem;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 999px;
+      border: none;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover::before { transform: translateX(0); }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--ink); color: #fff; }
+    .btn-gold    { background: var(--gold); color: #fff; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--ink); color: var(--ink); }
+    .btn-block   { width: 100%; }
+
+    /* ─────────────────────────────────────────
+       EYEBROW
+    ───────────────────────────────────────── */
+    .eyebrow {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 92vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 80px 0;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -20%; right: -10%;
+      width: 60vw; height: 60vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,149,90,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -15%; left: -5%;
+      width: 40vw; height: 40vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,149,90,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(184,149,90,0.4);
+      border-radius: 999px;
+      background: rgba(184,149,90,0.08);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5.5vw, 6rem);
+      font-weight: 300;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em { font-style: italic; color: var(--gold); }
+
+    .hero-text {
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.7; max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    .hero-social-proof {
+      margin-top: 3rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .avatar-stack { display: flex; }
+
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid var(--cream);
+      margin-left: -10px;
+      font-size: 0.68rem;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; color: #fff;
+    }
+
+    .avatar:first-child { margin-left: 0; }
+    .av1 { background: #8B6E52; }
+    .av2 { background: #6B4D38; }
+    .av3 { background: #A0826D; }
+    .av4 { background: #5C3D2E; }
+
+    .social-text { font-size: 0.85rem; color: var(--muted); }
+    .social-text strong { color: var(--ink); display: block; }
+
+    /* Hero visual */
+    .hero-visual { position: relative; }
+
+    .hero-bottle-wrap {
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+      /* constrain on desktop */
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-16px); }
+    }
+
+    .hero-bottle-bg {
+      position: absolute; inset: -8%; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(184,149,90,0.18), rgba(232,221,208,0.34) 60%, transparent);
+      filter: blur(40px); opacity: 0.75;
+    }
+
+    /* ── THE KEY FIX: hero image ── */
+    .hero-bottle-img {
+      position: relative; z-index: 1;
+      width: 100%;
+      max-width: 460px;          /* laptop cap */
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: 0 40px 80px rgba(13,9,5,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      display: block;
+      /* NO filter: drop-shadow — already handled by box-shadow */
+    }
+
+    .hero-tag {
+      position: absolute; top: 12%; right: -5%;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow);
+      font-size: 0.82rem;
+      animation: float 6s ease-in-out infinite 1s;
+      min-width: 130px;
+    }
+
+    .hero-tag-label { color: var(--muted); font-size: 0.72rem; margin-bottom: 2px; }
+    .hero-tag-val   { font-weight: 600; font-size: 1.1rem; }
+    .hero-tag-stars { color: var(--gold); font-size: 0.8rem; }
+
+    /* ─────────────────────────────────────────
+       SECTIONS
+    ───────────────────────────────────────── */
+    .section   { padding: 100px 0; }
+    .alt-bg    { background: var(--warm); }
+    .dark-bg   { background: var(--ink); color: var(--cream); }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.8rem);
+      font-weight: 300; line-height: 1.08;
+      margin-bottom: 1rem;
+    }
+
+    h2 em { font-style: italic; color: var(--gold); }
+
+    /* ─────────────────────────────────────────
+       DIVIDER
+    ───────────────────────────────────────── */
+    .divider {
+      display: flex; align-items: center; gap: 1.5rem;
+      margin: 0 auto 4rem; max-width: 300px;
+    }
+
+    .divider-line { flex: 1; height: 1px; background: var(--line); }
+    .divider-icon { color: var(--gold); font-size: 1.2rem; }
+
+    /* ─────────────────────────────────────────
+       MARQUEE
+    ───────────────────────────────────────── */
+    .marquee-wrap {
+      padding: 1.5rem 0;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex; gap: 3rem;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap; width: max-content;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 300; font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(248,243,236,0.5);
+      flex-shrink: 0;
+    }
+
+    .marquee-dot {
+      display: inline-block;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--gold);
+      vertical-align: middle;
+      margin: 0 1.5rem;
+    }
+
+    /* ─────────────────────────────────────────
+       PRODUCT SECTION
+    ───────────────────────────────────────── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem; align-items: start;
+    }
+
+    /* Gallery */
+    .gallery {
+      position: sticky;
+      top: 88px; /* below fixed header */
+    }
+
+    .gallery-stage {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--warm);
+      border: 1px solid var(--line);
+      margin-bottom: 1rem;
+    }
+
+    .gallery-main-frame {
+      aspect-ratio: 4 / 5;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0.08)),
+        radial-gradient(circle at top left, rgba(184,149,90,0.12), transparent 50%);
+      overflow: hidden;
+    }
+
+    .gallery-main-image {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease, opacity 0.3s ease;
+      display: block;
+    }
+
+    .gallery-main-image:hover { transform: scale(1.03); }
+
+    .gallery-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(248,243,236,0.9);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      z-index: 2;
+    }
+
+    .gallery-arrow:hover {
+      background: var(--surface);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .gallery-arrow-prev { left: 1rem; }
+    .gallery-arrow-next { right: 1rem; }
+
+    .gallery-thumbs {
+      display: flex; gap: 0.75rem;
+    }
+
+    .thumb {
+      flex: 1; aspect-ratio: 1;
+      border-radius: 12px; overflow: hidden;
+      border: 2px solid transparent;
+      background: var(--warm);
+      padding: 0.3rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .thumb:hover    { transform: translateY(-2px); }
+    .thumb.is-active { border-color: var(--gold); }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
+
+    .gallery-dots {
+      display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.75rem;
+    }
+
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      border: none; background: rgba(13,9,5,0.18);
+      transition: all 0.3s; cursor: pointer;
+    }
+
+    .dot.is-active { background: var(--gold); width: 20px; border-radius: 3px; }
+
+    /* Product copy */
+    .product-copy { padding-top: 0.5rem; }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+      font-weight: 300; margin-bottom: 0.5rem; line-height: 1.1;
+    }
+
+    .product-description {
+      color: var(--muted); font-size: 0.95rem;
+      line-height: 1.7; margin: 1rem 0 1.5rem;
+    }
+
+    .rating-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem; color: var(--muted);
+    }
+
+    .stars    { color: var(--gold); }
+    .rating-val { font-weight: 600; color: var(--ink); }
+
+    /* Option groups */
+    .option-group { border: none; padding: 0; margin-bottom: 1.5rem; }
+
+    .option-group legend {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.75rem; display: block;
+    }
+
+    .options-row { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .option-card {
+      display: flex; align-items: flex-start; gap: 0.9rem;
+      padding: 1rem 1.1rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-card:hover    { border-color: rgba(184,149,90,0.4); background: var(--warm); }
+    .option-card.is-selected { border-color: var(--gold); background: rgba(184,149,90,0.06); }
+
+    .option-card input {
+      margin-top: 2px; accent-color: var(--gold);
+      width: 16px; height: 16px; flex-shrink: 0;
+    }
+
+    .option-card > span { display: grid; gap: 2px; }
+
+    .option-card strong { font-size: 0.9rem; font-weight: 600; }
+    .option-card small  { font-size: 0.78rem; color: var(--muted); }
+
+    .option-badge {
+      margin-left: auto;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2rem 0.6rem; border-radius: 999px;
+      background: rgba(184,149,90,0.15);
+      color: var(--gold); flex-shrink: 0;
+    }
+
+    .subscription-panel {
+      display: none;
+      padding: 0.8rem 1rem 0.8rem 3rem;
+      font-size: 0.82rem; color: var(--muted);
+      background: rgba(184,149,90,0.05);
+      border-radius: 0 0 12px 12px;
+      margin-top: -0.5rem; margin-bottom: 0.5rem;
+      border: 1px solid rgba(184,149,90,0.2);
+      border-top: none;
+    }
+
+    .subscription-panel.is-open { display: block; }
+
+    .subscription-panel ul { list-style: none; display: grid; gap: 0.35rem; }
+
+    .subscription-panel li::before { content: '✓ '; color: var(--gold); font-weight: 600; }
+
+    /* CTA Box */
+    .cta-box {
+      margin-top: 2rem; padding: 1.5rem;
+      border-radius: 16px;
+      background: var(--warm);
+      border: 1px solid var(--line);
+    }
+
+    .cta-summary { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+    .cta-summary strong { color: var(--ink); }
+
+    .cta-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 400; margin-bottom: 1rem;
+    }
+
+    .cta-price small {
+      font-size: 1rem; color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .trust-badges { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+
+    .trust-badge {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.72rem; color: var(--muted);
+    }
+
+    .trust-badge-icon { color: var(--gold); }
+
+    /* ─────────────────────────────────────────
+       BENEFITS
+    ───────────────────────────────────────── */
+    .benefits-header { text-align: center; max-width: 560px; margin: 0 auto 4rem; }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      padding: 2rem; border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0); transition: transform 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: rgba(184,149,90,0.3);
+    }
+
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(184,149,90,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 1.2rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400; margin-bottom: 0.5rem;
+    }
+
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─────────────────────────────────────────
+       STATS
+    ───────────────────────────────────────── */
+    .stats-section { background: var(--ink); padding: 100px 0; }
+
+    .stats-header { text-align: center; margin-bottom: 4rem; }
+    .stats-header .eyebrow { color: var(--gold); }
+    .stats-header h2 { color: var(--cream); }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(248,243,236,0.1);
+      border: 1px solid rgba(248,243,236,0.1);
+      border-radius: 16px; overflow: hidden;
+    }
+
+    .stat-card {
+      padding: 2.5rem 2rem;
+      background: rgba(13,9,5,0.5);
+      text-align: center; transition: background 0.3s;
+    }
+
+    .stat-card:hover { background: rgba(184,149,90,0.08); }
+
+    .stat-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4vw, 4rem);
+      font-weight: 300; color: var(--cream);
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+
+    .stat-card h3 span { color: var(--gold); }
+    .stat-card p { font-size: 0.82rem; color: rgba(248,243,236,0.55); line-height: 1.5; }
+
+    /* ─────────────────────────────────────────
+       INGREDIENTS
+    ───────────────────────────────────────── */
+    .ingredients-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+
+    .ingredient-visual {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      aspect-ratio: 4 / 5; background: var(--warm-2);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .ingredient-visual-inner { text-align: center; font-family: 'Cormorant Garamond', serif; }
+
+    .ing-circle {
+      width: 200px; height: 200px; border-radius: 50%;
+      border: 1px solid rgba(184,149,90,0.3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; margin: 0 auto 1rem;
+    }
+
+    .ing-circle::before {
+      content: ''; position: absolute; inset: 12px;
+      border-radius: 50%; border: 1px solid rgba(184,149,90,0.2);
+    }
+
+    .ing-circle-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--gold);
+    }
+
+    .ingredient-list {
+      display: grid; gap: 0;
+      border: 1px solid var(--line); border-radius: 16px;
+      overflow: hidden; background: var(--surface);
+    }
+
+    .ingredient-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.2s;
+    }
+
+    .ingredient-row:last-child { border-bottom: none; }
+    .ingredient-row:hover { background: var(--warm); }
+
+    .ingredient-row strong {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .ingredient-row span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-style: italic; color: var(--ink);
+    }
+
+    /* ─────────────────────────────────────────
+       COMPARISON TABLE
+    ───────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto; border-radius: 16px;
+      border: 1px solid var(--line); background: var(--surface);
+    }
+
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+
+    thead th {
+      padding: 1.25rem 1.5rem; text-align: left;
+      background: var(--ink); color: var(--cream);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    thead th.highlight-col { background: var(--gold); color: #fff; }
+
+    tbody td {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td     { background: var(--warm); }
+
+    td.highlight-col { font-weight: 600; color: var(--gold); }
+
+    .check { color: var(--gold); }
+    .cross  { color: var(--muted); opacity: 0.5; }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    .site-footer {
+      background: var(--ink);
+      color: rgba(248,243,236,0.6);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem; margin-bottom: 4rem;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+
+    .footer-tagline { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+
+    .footer-col h4 {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+      display: block; font-size: 0.85rem; margin-bottom: 0.6rem;
+      transition: color 0.2s; color: rgba(248,243,236,0.6);
+    }
+
+    .footer-col a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(248,243,236,0.1);
+      font-size: 0.78rem;
+    }
+
+    .footer-back-top {
+      color: var(--gold); font-size: 0.78rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+
+    .footer-back-top:hover { opacity: 0.7; }
+
+    /* ─────────────────────────────────────────
+       SCROLL ANIMATIONS
+    ───────────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE — 1024px (tablet landscape)
+    ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .section { padding: 80px 0; }
+
+      .product-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .gallery { position: static; top: auto; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE — 768px (tablet portrait)
+    ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+
+      /* Hero */
+      .hero { min-height: auto; padding: 48px 0 64px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .hero-visual {
+        order: -1;           /* image first on mobile */
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .hero-bottle-wrap { max-width: 320px; }
+      .hero-bottle-img  { max-width: 320px; border-radius: 20px; }
+
+      .hero-tag { top: 8%; right: -2%; padding: 0.75rem 1rem; }
+
+      .hero-text { font-size: 1rem; }
+
+      /* Ingredients */
+      .ingredients-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      /* Feature cards */
+      .feature-cards { grid-template-columns: 1fr 1fr; }
+
+      /* Stats */
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+
+      /* Nav */
+      .primary-nav {
+        display: none; flex-direction: column; align-items: flex-start;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(248,243,236,0.97);
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        z-index: 199;
+      }
+
+      .primary-nav.is-open { display: flex; }
+      .menu-toggle { display: flex; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE — 520px (mobile)
+    ───────────────────────────────────────── */
+    @media (max-width: 520px) {
+      .section { padding: 48px 0; }
+
+      h1 { font-size: clamp(2.4rem, 8vw, 3.2rem); }
+      h2 { font-size: clamp(1.9rem, 7vw, 2.5rem); }
+
+      .hero-visual { max-width: 280px; }
+      .hero-bottle-wrap { max-width: 280px; }
+      .hero-bottle-img  { max-width: 280px; border-radius: 16px; }
+
+      .hero-tag { display: none; } /* hide floating tag on very small screens */
+
+      .hero-actions { flex-direction: column; }
+      .btn { min-height: 48px; }
+
+      .hero-social-proof { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+      .stats-grid { grid-template-columns: 1fr; }
+      .feature-cards { grid-template-columns: 1fr; }
+
+      .stats-section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand" aria-label="GTG Perfumes home">
+        <div class="brand-mark">GTG</div>
+        <span class="brand-text">Perfumes</span>
+      </a>
+
+      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" role="navigation">
+        <a href="#product">Shop</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#results">Results</a>
+        <a href="#comparison">Compare</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+
+        <div class="hero-copy">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            New 2025 Collection — Available Now
+          </div>
+          <p class="eyebrow">Fine Fragrance · Everyday Ritual</p>
+          <h1>Discover the art of <em>signature</em> scent.</h1>
+          <p class="hero-text">
+            Crafted for modern routines with layered notes, elevated packaging, and a premium feel across every touchpoint. Wear something worth remembering.
+          </p>
+          <div class="hero-actions">
+            <a href="#product" class="btn btn-primary">Shop the Collection</a>
+            <a href="#results" class="btn btn-outline">See Results</a>
+          </div>
+          <div class="hero-social-proof">
+            <div class="avatar-stack">
+              <div class="avatar av1">AK</div>
+              <div class="avatar av2">PL</div>
+              <div class="avatar av3">SR</div>
+              <div class="avatar av4">MN</div>
+            </div>
+            <div class="social-text">
+              <strong>2,418 verified reviews</strong>
+              ★★★★★ 4.8 / 5 rating
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-bottle-wrap">
+            <div class="hero-bottle-bg"></div>
+            <img
+              class="hero-bottle-img"
+              src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=920&q=85"
+              alt="Premium GTG perfume bottle in luxury studio lighting"
+              loading="eager"
+              width="920"
+              height="1150"
+            />
+            <div class="hero-tag">
+              <div class="hero-tag-label">Customer rating</div>
+              <div class="hero-tag-stars">★★★★★</div>
+              <div class="hero-tag-val">4.8 / 5</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Floral Veil<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Midnight Amber<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Citrus Bloom<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Fine Fragrance<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Long Lasting<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Layer-Friendly<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Travel Ready<span class="marquee-dot"></span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Floral Veil<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Midnight Amber<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Citrus Bloom<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Fine Fragrance<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Long Lasting<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Layer-Friendly<span class="marquee-dot"></span></span>
+        <span class="marquee-item">Travel Ready<span class="marquee-dot"></span></span>
+      </div>
+    </div>
+
+    <!-- PRODUCT -->
+    <section id="product" class="section">
+      <div class="container">
+        <div class="product-grid">
+
+          <!-- Gallery -->
+          <div class="gallery">
+            <div class="gallery-stage">
+              <button class="gallery-arrow gallery-arrow-prev" aria-label="Previous image">&#8592;</button>
+              <div class="gallery-main-frame">
+                <img
+                  id="gallery-main-image"
+                  class="gallery-main-image"
+                  src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+                  alt="GTG Floral Veil perfume bottle — studio photography"
+                  loading="eager"
+                  width="900"
+                  height="1125"
+                />
+              </div>
+              <button class="gallery-arrow gallery-arrow-next" aria-label="Next image">&#8594;</button>
+            </div>
+
+            <div class="gallery-thumbs" role="list">
+              <button class="thumb is-active" data-image="0" aria-label="View image 1" role="listitem">
+                <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=300&q=70" alt="Thumbnail 1" loading="lazy" width="300" height="300" />
+              </button>
+              <button class="thumb" data-image="1" aria-label="View image 2" role="listitem">
+                <img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=300&q=70" alt="Thumbnail 2" loading="lazy" width="300" height="300" />
+              </button>
+              <button class="thumb" data-image="2" aria-label="View image 3" role="listitem">
+                <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=300&q=70" alt="Thumbnail 3" loading="lazy" width="300" height="300" />
+              </button>
+              <button class="thumb" data-image="3" aria-label="View image 4" role="listitem">
+                <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=300&q=70" alt="Thumbnail 4" loading="lazy" width="300" height="300" />
+              </button>
+            </div>
+
+            <div class="gallery-dots" role="tablist" aria-label="Image navigation">
+              <button class="dot is-active" data-image="0" aria-label="Image 1" role="tab"></button>
+              <button class="dot" data-image="1" aria-label="Image 2" role="tab"></button>
+              <button class="dot" data-image="2" aria-label="Image 3" role="tab"></button>
+              <button class="dot" data-image="3" aria-label="Image 4" role="tab"></button>
+            </div>
+          </div>
+
+          <!-- Product copy -->
+          <div class="product-copy">
+            <p class="eyebrow">GTG Perfumes · 2025 Collection</p>
+            <h2 class="product-name">Signature scents built for your daily <em>rhythm.</em></h2>
+            <p class="product-description">
+              Choose your preferred fragrance and purchase model. Each formula is designed to layer beautifully with your natural skin chemistry for an entirely personal result.
+            </p>
+
+            <div class="rating-row">
+              <span class="stars" aria-label="5 stars">★★★★★</span>
+              <span class="rating-val">4.8/5</span>
+              <span style="color:var(--muted)">· 2,418 verified reviews</span>
+            </div>
+
+            <form id="product-form">
+              <fieldset class="option-group">
+                <legend>Choose your fragrance</legend>
+                <div class="options-row">
+                  <label class="option-card">
+                    <input type="radio" name="fragrance" value="floral-veil" checked />
+                    <span><strong>Floral Veil</strong><small>Soft jasmine, rose, white musk</small></span>
+                  </label>
+                  <label class="option-card">
+                    <input type="radio" name="fragrance" value="midnight-amber" />
+                    <span><strong>Midnight Amber</strong><small>Amberwood, vanilla, patchouli</small></span>
+                  </label>
+                  <label class="option-card">
+                    <input type="radio" name="fragrance" value="citrus-bloom" />
+                    <span><strong>Citrus Bloom</strong><small>Bergamot, neroli, cedar</small></span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="option-group">
+                <legend>Purchase type</legend>
+                <div class="options-row">
+                  <label class="option-card">
+                    <input type="radio" name="purchaseType" value="one-time" checked />
+                    <span><strong>One-time purchase</strong><small>Perfect for gifting or first-time trial</small></span>
+                  </label>
+
+                  <label class="option-card" data-expand="single-subscription">
+                    <input type="radio" name="purchaseType" value="single-subscription" />
+                    <span><strong>Single Subscription</strong><small>1 bottle every 30 days</small></span>
+                    <span class="option-badge">Save 15%</span>
+                  </label>
+                  <div class="subscription-panel" id="single-subscription">
+                    <ul>
+                      <li>Free delivery every month</li>
+                      <li>Pause or cancel anytime</li>
+                      <li>Early access to seasonal drops</li>
+                    </ul>
+                  </div>
+
+                  <label class="option-card" data-expand="double-subscription">
+                    <input type="radio" name="purchaseType" value="double-subscription" />
+                    <span><strong>Double Subscription</strong><small>2 bottles every 30 days</small></span>
+                    <span class="option-badge">Save 25%</span>
+                  </label>
+                  <div class="subscription-panel" id="double-subscription">
+                    <ul>
+                      <li>Best value for shared households</li>
+                      <li>Includes priority restock support</li>
+                      <li>Bonus miniature travel spray</li>
+                    </ul>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+
+            <div class="cta-box">
+              <div class="cta-summary">
+                <strong>Selected:</strong> <span id="selection-summary">Floral Veil · One-time purchase</span>
+              </div>
+              <div class="cta-price">£48 <small>/ bottle</small></div>
+              <a id="add-to-cart-link" class="btn btn-gold btn-block" href="https://example.com/cart?fragrance=floral-veil&purchase=one-time">
+                Add to Cart
+              </a>
+              <div class="trust-badges">
+                <span class="trust-badge"><span class="trust-badge-icon">🔒</span> Secure checkout</span>
+                <span class="trust-badge"><span class="trust-badge-icon">↩</span> 30-day returns</span>
+                <span class="trust-badge"><span class="trust-badge-icon">🚚</span> Free shipping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section id="benefits" class="section alt-bg">
+      <div class="container">
+        <div class="benefits-header fade-up">
+          <p class="eyebrow">Why customers love it</p>
+          <h2>Luxury-inspired formulas with effortless <em>wear.</em></h2>
+        </div>
+
+        <div class="divider" aria-hidden="true">
+          <div class="divider-line"></div>
+          <div class="divider-icon">❋</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="feature-cards">
+          <article class="feature-card fade-up">
+            <div class="feature-icon" aria-hidden="true">⏱</div>
+            <h3>Long-lasting</h3>
+            <p>Balanced projection with a skin-close finish for all-day comfort — from morning commute to evening occasion.</p>
+          </article>
+          <article class="feature-card fade-up" style="transition-delay:0.1s">
+            <div class="feature-icon" aria-hidden="true">✦</div>
+            <h3>Layer-friendly</h3>
+            <p>Designed to work beautifully solo or blend effortlessly with your existing skincare and body routine.</p>
+          </article>
+          <article class="feature-card fade-up" style="transition-delay:0.2s">
+            <div class="feature-icon" aria-hidden="true">✈</div>
+            <h3>Travel-ready</h3>
+            <p>Compact, airline-compliant packaging with a premium unboxing experience every single time.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="results" class="stats-section">
+      <div class="container">
+        <div class="stats-header fade-up">
+          <p class="eyebrow">Measured impact</p>
+          <h2>Results that speak for <em>themselves.</em></h2>
+        </div>
+
+        <div class="stats-grid" id="stats-grid">
+          <article class="stat-card">
+            <h3><span class="count-up" data-target="84">0</span><span>%</span></h3>
+            <p>felt the fragrance lasted beyond 6 hours</p>
+          </article>
+          <article class="stat-card">
+            <h3><span class="count-up" data-target="78">0</span><span>%</span></h3>
+            <p>said it elevated their daily routine</p>
+          </article>
+          <article class="stat-card">
+            <h3><span class="count-up" data-target="91">0</span><span>%</span></h3>
+            <p>would recommend GTG Perfumes to a friend</p>
+          </article>
+          <article class="stat-card">
+            <h3><span class="count-up" data-target="67">0</span><span>%</span></h3>
+            <p>switched from a previous premium fragrance brand</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- INGREDIENTS -->
+    <section id="ingredients" class="section">
+      <div class="container">
+        <div class="ingredients-grid">
+          <div class="ingredient-visual fade-up">
+            <div class="ingredient-visual-inner">
+              <div class="ing-circle">
+                <span class="ing-circle-text">GTG</span>
+              </div>
+              <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--muted);">Composed with care</p>
+            </div>
+          </div>
+
+          <div class="fade-up" style="transition-delay:0.15s">
+            <p class="eyebrow">Ingredients</p>
+            <h2>Composed with premium <em>accords.</em></h2>
+            <p style="color:var(--muted); margin-bottom:2rem; font-size:0.95rem; line-height:1.7;">
+              Every note is selected for its quality, longevity, and ability to evolve beautifully on the skin across the full fragrance arc.
+            </p>
+
+            <div class="ingredient-list">
+              <div class="ingredient-row">
+                <strong>Top notes</strong>
+                <span>Bergamot, neroli, pear</span>
+              </div>
+              <div class="ingredient-row">
+                <strong>Heart notes</strong>
+                <span>Rose, jasmine sambac, iris</span>
+              </div>
+              <div class="ingredient-row">
+                <strong>Base notes</strong>
+                <span>Vanilla, amberwood, white musk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section id="comparison" class="section alt-bg">
+      <div class="container">
+        <div style="max-width:560px; margin-bottom:3rem;" class="fade-up">
+          <p class="eyebrow">Comparison</p>
+          <h2>Why GTG stands <em>apart.</em></h2>
+        </div>
+
+        <div class="table-wrap fade-up" style="transition-delay:0.1s">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th class="highlight-col">GTG Perfumes</th>
+                <th>Typical Premium Brand</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wear time</td>
+                <td class="highlight-col">6–8 hours</td>
+                <td>4–6 hours</td>
+              </tr>
+              <tr>
+                <td>Subscription savings</td>
+                <td class="highlight-col">Up to 25%</td>
+                <td>Usually unavailable</td>
+              </tr>
+              <tr>
+                <td>Travel bonus spray</td>
+                <td class="highlight-col">Included on double sub</td>
+                <td>Rarely included</td>
+              </tr>
+              <tr>
+                <td>Pause / cancel anytime</td>
+                <td class="highlight-col"><span class="check">✓</span> Always</td>
+                <td><span class="cross">✗</span> Varies by brand</td>
+              </tr>
+              <tr>
+                <td>Free delivery</td>
+                <td class="highlight-col"><span class="check">✓</span> On subscription</td>
+                <td>Often £4.99+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">GTG Perfumes</div>
+          <p class="footer-tagline">
+            Fine fragrance for the modern everyday. Crafted with premium accords, designed for real life.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="#product">Floral Veil</a>
+          <a href="#product">Midnight Amber</a>
+          <a href="#product">Citrus Bloom</a>
+          <a href="#product">Gift sets</a>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <a href="#">Ingredients</a>
+          <a href="#">Sustainability</a>
+          <a href="#">Returns policy</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 GTG Perfumes. All rights reserved.</p>
+        <a href="#hero" class="footer-back-top">↑ Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── GALLERY ─── */
+    const images = [
+      { src: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80", alt: "Floral Veil perfume bottle — studio setup" },
+      { src: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=900&q=80", alt: "Midnight Amber fragrance photography" },
+      { src: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80", alt: "Luxury perfume shelf with warm lighting" },
+      { src: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80", alt: "Minimal perfume bottle on luxury surface" }
+    ];
+
+    const galleryMain  = document.getElementById('gallery-main-image');
+    const thumbButtons = document.querySelectorAll('.thumb');
+    const dotButtons   = document.querySelectorAll('.dot');
+    const prevBtn      = document.querySelector('.gallery-arrow-prev');
+    const nextBtn      = document.querySelector('.gallery-arrow-next');
+    let currentIndex   = 0;
+
+    function updateGallery(index) {
+      currentIndex = (index + images.length) % images.length;
+      galleryMain.style.opacity = '0';
+      setTimeout(() => {
+        galleryMain.src = images[currentIndex].src;
+        galleryMain.alt = images[currentIndex].alt;
+        galleryMain.style.opacity = '1';
+      }, 180);
+      thumbButtons.forEach((b, i) => b.classList.toggle('is-active', i === currentIndex));
+      dotButtons.forEach((b, i)   => b.classList.toggle('is-active', i === currentIndex));
+    }
+
+    thumbButtons.forEach((b, i) => b.addEventListener('click', () => updateGallery(i)));
+    dotButtons.forEach((b, i)   => b.addEventListener('click', () => updateGallery(i)));
+    prevBtn?.addEventListener('click', () => updateGallery(currentIndex - 1));
+    nextBtn?.addEventListener('click', () => updateGallery(currentIndex + 1));
+
+    /* Swipe support on mobile */
+    let touchStartX = 0;
+    galleryMain?.parentElement?.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    galleryMain?.parentElement?.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) updateGallery(dx < 0 ? currentIndex + 1 : currentIndex - 1);
+    }, { passive: true });
+
+    /* ─── PRODUCT FORM ─── */
+    const productForm      = document.getElementById('product-form');
+    const selectionSummary = document.getElementById('selection-summary');
+    const addToCartLink    = document.getElementById('add-to-cart-link');
+    const allOptionCards   = document.querySelectorAll('.option-card');
+
+    const fragranceLabels = {
+      'floral-veil':   'Floral Veil',
+      'midnight-amber':'Midnight Amber',
+      'citrus-bloom':  'Citrus Bloom',
+    };
+
+    const purchaseLabels = {
+      'one-time':             'One-time purchase',
+      'single-subscription':  'Single Subscription (–15%)',
+      'double-subscription':  'Double Subscription (–25%)',
+    };
+
+    function syncCards() {
+      allOptionCards.forEach(card => {
+        const input = card.querySelector('input');
+        if (input) card.classList.toggle('is-selected', input.checked);
+      });
+    }
+
+    function togglePanels(val) {
+      document.querySelectorAll('.subscription-panel').forEach(p => p.classList.remove('is-open'));
+      if (val === 'single-subscription') document.getElementById('single-subscription')?.classList.add('is-open');
+      if (val === 'double-subscription') document.getElementById('double-subscription')?.classList.add('is-open');
+    }
+
+    function updateCart() {
+      const data      = new FormData(productForm);
+      const fragrance = data.get('fragrance');
+      const purchase  = data.get('purchaseType');
+      selectionSummary.textContent = `${fragranceLabels[fragrance]} · ${purchaseLabels[purchase]}`;
+      addToCartLink.href = `https://example.com/cart?fragrance=${encodeURIComponent(fragrance)}&purchase=${encodeURIComponent(purchase)}`;
+      togglePanels(purchase);
+      syncCards();
+    }
+
+    productForm?.addEventListener('change', updateCart);
+    updateCart();
+
+    /* ─── MOBILE MENU ─── */
+    const menuToggle = document.querySelector('.menu-toggle');
+    const primaryNav = document.querySelector('.primary-nav');
+
+    menuToggle?.addEventListener('click', () => {
+      const open = primaryNav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    primaryNav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      primaryNav.classList.remove('is-open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+    }));
+
+    /* ─── COUNT UP ANIMATION ─── */
+    const counters  = document.querySelectorAll('.count-up');
+    const statsGrid = document.getElementById('stats-grid');
+    let counted     = false;
+
+    function animateCount(el) {
+      const target = +el.dataset.target;
+      const dur    = 1800;
+      const start  = performance.now();
+      (function tick(now) {
+        const p     = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(eased * target);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      })(performance.now());
+    }
+
+    if (statsGrid && counters.length) {
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !counted) {
+            counters.forEach(animateCount);
+            counted = true;
+          }
+        });
+      }, { threshold: 0.25 }).observe(statsGrid);
+    }
+
+    /* ─── FADE UP ON SCROLL ─── */
+    const fadeEls      = document.querySelectorAll('.fade-up');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          fadeObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeEls.forEach(el => fadeObserver.observe(el));
+  </script>
+</body>
+</html>
